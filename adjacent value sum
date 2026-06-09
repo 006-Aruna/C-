@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int R, C;
+    cin >> R >> C;  // input rows and columns
+
+    vector<vector<int>> grid(R, vector<int>(C));
+    for(int i = 0; i < R; i++) {
+        for(int j = 0; j < C; j++) {
+            cin >> grid[i][j];
+        }
+    }
+
+    // Directions: 8 neighbors (left, right, up, down, diagonals)
+    int diff[8][2] = {
+        {0,-1}, {0,1}, {-1,0}, {1,0},
+        {-1,-1}, {-1,1}, {1,-1}, {1,1}
+    };
+
+    long totalSum = 0;
+
+    for(int row = 0; row < R; row++) {
+        for(int col = 0; col < C; col++) {
+            long sum = 0;
+            for(int i = 0; i < 8; i++) {
+                int ar = row + diff[i][0];
+                int ac = col + diff[i][1];
+                if(ar >= 0 && ar < R && ac >= 0 && ac < C) {
+                    sum += grid[ar][ac];
+                }
+            }
+            cout << "Sum of neighbors at (" << row << "," << col << ") = " << sum << endl;
+            totalSum += sum;
+        }
+    }
+
+    cout << "Total sum of all neighbors = " << totalSum << endl;
+    return 0;
+}
