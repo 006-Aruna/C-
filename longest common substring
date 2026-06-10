@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    string S1, S2;
+    cin >> S1;
+    cin >> S2;
+    int n = S1.size();
+    int m = S2.size();
+
+    // DP table: (m+1) x (n+1)
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    int maxLen = 0;
+
+    // Fill DP table
+    for (int row = 1; row <= m; row++) {
+        for (int col = 1; col <= n; col++) {
+            if (S2[row - 1] == S1[col - 1]) {
+                dp[row][col] = 1 + dp[row - 1][col - 1];
+                maxLen = dp[row][col] > maxLen ? dp[row][col] : maxLen;
+            }
+        }
+    }
+
+    cout << "Length of Longest Common Substring = " << maxLen << endl;
+    return 0;
+}
