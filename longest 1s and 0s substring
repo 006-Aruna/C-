@@ -33,7 +33,8 @@ int longestEqual01(string s) {
 }
 
 int main() {
-    string s = "110100";
+    string s;
+    cin>> s;
 
     cout << longestEqual01(s);
 
