@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k, q;
+    cin >> n >> k >> q;
+
+    const int MAXT = 200000;
+    vector<int> diff(MAXT + 2, 0);    // first array
+    vector<int> prefix(MAXT + 2, 0);  // second array
+
+    // Range updates using diff
+    for (int i = 0; i < n; i++) {
+        int l, r;
+        cin >> l >> r;
+        diff[l] += 1;
+        diff[r + 1] -= 1;
+    }
+
+    // Build prefix of admissible counts directly
+    int curr = 0;
+    for (int i = 1; i <= MAXT; i++) {
+        curr += diff[i];  // number of recipes recommending temp i
+        prefix[i] = prefix[i - 1] + (curr >= k ? 1 : 0);
+    }
+
+    // Answer queries
+    while (q--) {
+        int a, b;
+        cin >> a >> b;
+        cout << prefix[b] - prefix[a - 1] << "\n";
+    }
+
+    return 0;
+}
